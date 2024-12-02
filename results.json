@@ -1,0 +1,44 @@
+{
+    "output_aggregation": {
+        "with_leakage": {
+            "loss": 0.9997656815930417,
+            "accuracy": 66.08333333333334
+        },
+        "without_leakage": {
+            "loss": 2.5202113703677527,
+            "accuracy": 31.25
+        }
+    },
+    "late_fusion_mlp": {
+        "with_leakage": {
+            "loss": 2.2216403484344482,
+            "accuracy": 19.166666666666668
+        },
+        "without_leakage": {}
+    },
+    "late_fusion_pooling": {
+        "with_leakage": {
+            "loss": 1.714806318283081,
+            "accuracy": 33.33333333333333
+        },
+        "without_leakage": {}
+    },
+    "early_fusion": {
+        "with_leakage": {
+            "loss": 1.9908882975578308,
+            "accuracy": 35.0
+        },
+        "without_leakage": {}
+    },
+    "3D_CNN": {
+        "with_leakage": {
+            "loss": 1.981888771057129,
+            "accuracy": 29.166666666666668
+        },
+        "without_leakage": {}
+    },
+    "Dual_stream": {
+        "with_leakage": {},
+        "without_leakage": {}
+    }
+}

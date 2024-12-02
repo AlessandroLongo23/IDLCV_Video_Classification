@@ -83,33 +83,23 @@ class OutputAggregation(nn.Module):
                 scheduler.step(val_loss / len(val_loader))
             
             if plot:
-                plot_results(results, epoch)
+                plot_results(results, epoch, num_epochs)
 
-    def eval_(self, test_loader):
+    def eval_(self, criterion, test_loader):
         self.eval()
+        test_loss = 0.0
         test_correct = 0
-        
-        for video_frames, labels in test_loader:
-            target = labels.to(self.device)
-            outputs = []
-            
-            for frame in video_frames:
-                frame = frame.to(self.device)
 
-                with torch.no_grad():
-                    output = self(frame)
+        with torch.no_grad():
+            for data, target in test_loader:
+                data, target = data.to(self.device), target.to(self.device)
+                output = self(data)
+                loss = criterion(output, target)
+                test_loss += loss.item()
+                predicted = torch.argmax(output, dim=1)
+                test_correct += (target == predicted).sum().cpu().item()
                 
-                output = torch.softmax(output, dim=1)
-                output = torch.argmax(output, dim=1)
-                outputs.append(output)
-            
-            outputs = torch.stack(outputs, dim=0)
-            output, _ = torch.mode(outputs, dim=0)
-            
-            test_correct += (target == output).sum().cpu().item()
-
-        accuracy = test_correct / len(test_loader.dataset)
-        print(f"Test accuracy: {accuracy * 100:.1f}%")
-        
-    # def plot_training_history(self):
-        
+        return {
+            'loss': test_loss / len(test_loader), 
+            'accuracy': test_correct / len(test_loader.dataset) * 100
+        }

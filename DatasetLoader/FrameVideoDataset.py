@@ -8,7 +8,7 @@ from torchvision import transforms as T
 from utils.globalConst import *
 
 class FrameVideoDataset(torch.utils.data.Dataset):
-    def __init__(self, split = 'train', transform = None, stack_frames = True, leakage = True):
+    def __init__(self, split, transform=None, stack_frames=True, leakage=True): 
         if (leakage):
             self.video_paths = sorted(glob(f'{LEAKAGE_DATASET_DIR}/videos/{split}/*/*.avi'))
             for i in range(len(self.video_paths)):

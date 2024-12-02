@@ -104,4 +104,27 @@ class CNN3D(nn.Module):
                 scheduler.step(val_loss / len(val_loader))
             
             if plot:
-                plot_results(results, epoch)
+                plot_results(results, epoch, num_epochs)
+                
+    def eval_(self, criterion, test_loader):
+        self.eval()
+        test_loss = 0.0
+        test_correct = 0
+
+        with torch.no_grad():
+            for video_frames, labels in test_loader:
+                video_frames = torch.stack(video_frames, dim=0).to(self.device)
+                video_frames = video_frames.permute(1, 2, 0, 3, 4)
+                labels = labels.to(self.device)
+
+                outputs = self(video_frames)
+                loss = criterion(outputs, labels)
+
+                test_loss += loss.item()
+                _, predicted = torch.max(outputs.data, 1)
+                test_correct += (predicted == labels).sum().item()
+
+        return {
+            'loss': test_loss / len(test_loader), 
+            'accuracy': test_correct / len(test_loader.dataset) * 100
+        }

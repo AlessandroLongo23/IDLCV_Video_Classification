@@ -6,8 +6,16 @@ import numpy as np
 def smooth(data, window_size=5):
     return np.convolve(data, np.ones(window_size)/window_size, mode='valid')
 
-def plot_results(results, epoch, window_size=5):
+def plot_results(results, epoch, num_epochs, window_size=5):
     clear_output(wait=True)
+    print(
+        f'Epoch {epoch + 1}/{num_epochs}:\n',
+        f'Train Loss: {results["train_loss"][-1]:.4f}\t',
+        f'Train Accuracy: {results["train_acc"][-1]:.2f}%\n',
+        f'Validation Loss: {results["val_loss"][-1]:.4f}\t',
+        f'Validation Accuracy: {results["val_acc"][-1]:.2f}%'
+    )
+    
     fig, axs = plt.subplots(1, 2, figsize=(20, 8))
 
     # Plotting loss

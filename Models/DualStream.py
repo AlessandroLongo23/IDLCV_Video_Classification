@@ -93,7 +93,7 @@ class DualStream(nn.Module):
         fused_output = spatial_output + temporal_output
         return fused_output
 
-    def train_(self, num_epochs, optimizer, criterion, train_loader, val_loader, plot=False):
+    def train_(self, num_epochs, optimizer, scheduler, criterion, train_loader, val_loader, plot=False):
         results = {
             'train_loss': [],
             'val_loss': [],
@@ -145,9 +145,35 @@ class DualStream(nn.Module):
 
             results['val_loss'].append(val_loss / len(val_loader))
             results['val_acc'].append(val_correct / len(val_loader.dataset) * 100)
+            
+            if scheduler:
+                scheduler.step(val_loss / len(val_loader))
 
             if plot:
-                plot_results(results, epoch)
+                plot_results(results, epoch, num_epochs)
+                
+    def eval_(self, criterion, test_loader):
+        self.eval()
+        test_loss = 0.0
+        test_correct = 0
+
+        with torch.no_grad():
+            for flows, labels in test_loader:
+                flows = flows.to(self.device)
+                labels = labels.to(self.device)
+
+                rgb_frames = flows[:, :3, :, :]
+
+                outputs = self(rgb_frames, flows)
+                loss = criterion(outputs, labels)
+                test_loss += loss.item()
+                _, predicted = torch.max(outputs, 1)
+                test_correct += (predicted == labels).sum().item()
+
+        return {
+            'loss': test_loss / len(test_loader), 
+            'accuracy': test_correct / len(test_loader.dataset) * 100
+        }
                 
                 
 def smooth(data, window_size=5):

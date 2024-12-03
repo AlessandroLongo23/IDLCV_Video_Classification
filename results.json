@@ -1,44 +1,59 @@
 {
     "output_aggregation": {
         "with_leakage": {
-            "loss": 0.9997656815930417,
-            "accuracy": 66.08333333333334
+            "loss": 0.32039296901539754,
+            "accuracy": 90.66666666666666
         },
         "without_leakage": {
-            "loss": 2.5202113703677527,
-            "accuracy": 31.25
+            "loss": 3.673372406708567,
+            "accuracy": 36.333333333333336
         }
     },
     "late_fusion_mlp": {
         "with_leakage": {
-            "loss": 2.2216403484344482,
-            "accuracy": 19.166666666666668
+            "loss": 1.997926950454712,
+            "accuracy": 24.166666666666668
         },
-        "without_leakage": {}
+        "without_leakage": {
+            "loss": 2.239926338195801,
+            "accuracy": 19.166666666666668
+        }
     },
     "late_fusion_pooling": {
         "with_leakage": {
-            "loss": 1.714806318283081,
-            "accuracy": 33.33333333333333
+            "loss": 0.38523121178150177,
+            "accuracy": 86.66666666666667
         },
-        "without_leakage": {}
+        "without_leakage": {
+            "loss": 2.147953987121582,
+            "accuracy": 34.166666666666664
+        }
     },
     "early_fusion": {
         "with_leakage": {
-            "loss": 1.9908882975578308,
-            "accuracy": 35.0
+            "loss": 1.560244858264923,
+            "accuracy": 50.0
         },
-        "without_leakage": {}
+        "without_leakage": {
+            "loss": 2.243927836418152,
+            "accuracy": 18.333333333333332
+        }
     },
     "3D_CNN": {
         "with_leakage": {
-            "loss": 1.981888771057129,
-            "accuracy": 29.166666666666668
+            "loss": 0.9727142751216888,
+            "accuracy": 65.0
         },
-        "without_leakage": {}
+        "without_leakage": {
+            "loss": 2.743080735206604,
+            "accuracy": 17.5
+        }
     },
-    "Dual_stream": {
+    "dual_stream": {
         "with_leakage": {},
-        "without_leakage": {}
+        "without_leakage": {
+            "loss": 1.6839779019355774,
+            "accuracy": 54.166666666666664
+        }
     }
 }

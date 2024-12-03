@@ -15,6 +15,7 @@ class LateFusionMLP(nn.Module):
             nn.Linear(FRAMES_PER_VIDEO * 3 * 3 * 512, 512),
             nn.ReLU(),
             nn.Dropout(DROPOUT_RATE),
+            
             nn.Linear(512, NUM_CLASSES)
         )
 
